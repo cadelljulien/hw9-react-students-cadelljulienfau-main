@@ -1,0 +1,55 @@
+<!-- filename: addstudent.html -->
+<!DOCTYPE html>
+<%- include('../views/head') %>
+<%- include('../views/navbar') %>
+<body>
+  <br></br>
+  <br></br>
+  <h3>Add Student</h3> <!-- text box inputs -->
+  <label for="first name">First Name:</label>
+  <input type="text" id="first" name="first"><br><br>
+  <label for="last name">Last Name:</label>
+  <input type="text" id="last" name="last"><br><br>
+  <label for="gpa">GPA:</label>
+  <input type="text" id="gpa" name="gpa"><br><br>
+  <label for="enrolled">Enrolled:</label>
+  <input type="checkbox" id="enrolled" name="enrolled" checked><br><br>
+
+<!-- buttons-->
+  <button onclick="updatestudent()">Add Student</button>
+  <br>
+  <br>
+  <div id="mydiv" name="mydiv"></div>
+  <script>
+//adds the value though function 
+function updatestudent() { 
+  var first_val = $("#first").val();
+  var last_val = $("#last").val();
+  var gpa_val = $("#gpa").val();
+  var enrolled_val = $("#enrolled").is(":checked");
+
+  $.ajax({
+    url: "http://localhost:5678/students",
+    type: "post",
+    data: { 
+      first_name: first_val,
+      last_name: last_val,
+      gpa: gpa_val,
+      enrolled: enrolled_val
+    },
+    success: function(response) { //sends message
+      console.log("Student added to database successfully");
+      $("#mydiv").text("Student added to database successfully");
+    },
+    error: function(xhr) {
+      console.log("Error adding student to database");
+      $("#mydiv").text("Error adding student to database");
+    }
+  });
+}
+
+    
+  </script>
+
+</body>
+</html>

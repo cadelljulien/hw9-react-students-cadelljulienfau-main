@@ -1,0 +1,53 @@
+<!-- filename: updatestudent.html -->
+<!DOCTYPE html>
+<html>
+  <%- include('../views/head') %>
+  <%- include('../views/navbar') %>
+<body>
+  <br></br>
+  <br></br>
+  <h3>Update Student</h3>
+  <label for="record">Student Record ID:</label> <!-- textbox -->
+  <input type="text" id="record" name="record"><br><br>
+  <label for="first name">First Name:</label>
+  <input type="text" id="first" name="first"><br><br>
+  <label for="last name">Last Name:</label>
+  <input type="text" id="last" name="last"><br><br>
+  <label for="gpa">GPA:</label>
+  <input type="text" id="gpa" name="gpa"><br><br>
+
+<!-- buttons -->
+  <button onclick="addstudent()">Update Student</button>
+  <br>
+  <br>
+  <div id="mydiv" name="mydiv"></div>
+  <script>
+//student function
+    function addstudent() {
+      var record_val = $("#record").val();
+      var first_val = $("#first").val();
+      var last_val = $("#last").val();
+      var gpa_val = $("#gpa").val();
+       enrolled_val= true;
+      $.ajax({
+        url: "http://localhost:5678/students/"+record_val,
+        type: "put",
+        data: { 
+          first_name: first_val,
+          last_name: last_val,
+          gpa: gpa_val,
+          "enrolled": enrolled_val
+        },
+        success: function(response) { //messaging
+          $("#mydiv").text(response);
+        },
+        error: function(xhr) {
+          $("#mydiv").text('error: ' + xhr);
+        }
+      });
+    }
+    
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!-- filename: getstudent.html -->
+<!DOCTYPE html>
+<html>
+  <%- include('../views/head') %>
+  <%- include('../views/navbar') %>
+<body>
+  <br></br>
+  <br></br>
+  <label for="record">Student Record ID:</label> <!-- get student id text -->
+  <input type="text" id="record" name="record"><br><br>
+
+  <button onclick="getstudent()">View Student</button><!-- button-->
+  <br>
+  <br>
+  <div id="mydiv" name="mydiv"></div>
+  <script>
+//function for it
+function getstudent() {
+  var record_val = $("#record").val();
+  $.ajax({
+    url: "http://localhost:5678/students/",
+    type: "get",
+    success: function(response) {
+      var student = response.filter(function(item) {
+        return item.record_id === parseInt(record_val);
+      });
+      if (student.length > 0) { //messaging 
+        $("#mydiv").text(JSON.stringify(student[0]));
+      } else {
+        $("#mydiv").text('error: student not found');
+      }
+    },
+    error: function(xhr) {
+      $("#mydiv").text('error: ' + xhr);
+      console.log(xhr)
+    }
+  });
+}
+
+
+
+
+    
+    
+  </script>
+
+</body>
+</html>

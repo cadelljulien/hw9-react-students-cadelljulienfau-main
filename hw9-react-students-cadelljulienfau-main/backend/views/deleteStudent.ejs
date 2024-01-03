@@ -1,0 +1,38 @@
+<!-- filename: deletestudent.html -->
+<!DOCTYPE html>
+<html>
+  <%- include('../views/head') %>
+  <%- include('../views/navbar') %>
+<body>
+  <br></br>
+  <br></br>
+  <label for="record">Student Record ID:</label>
+  <input type="text" id="record" name="record"><br><br><!-- text box for id -->
+<!-- delete button added -->
+  <button onclick="deletestudent()">Delete student</button>
+  <br>
+  <br>
+  <div id="mydiv" name="mydiv"></div>
+  <script>
+
+function deletestudent() {
+  var record_val = $("#record").val();
+  $.ajax({
+    url: "http://localhost:5678/students/"+record_val,
+    type: "DELETE",
+    
+    success: function(response) {
+      $("#mydiv").text(response.message);
+    },
+    error: function(xhr) {
+      $("#mydiv").text('error: ' + xhr.responseJSON.message);
+    }
+  });
+}
+
+    
+  </script>
+
+</body>
+</html>
+
